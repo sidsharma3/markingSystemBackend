@@ -21,6 +21,9 @@ const blogSchema = new mongoose.Schema(
             min: 200,
             max: 2000000
         },
+        feedback: {
+            type: {}
+        },
         excerpt: {
             type: String,
             max: 1000

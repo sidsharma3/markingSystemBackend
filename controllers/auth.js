@@ -108,6 +108,7 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
+    console.log("orange")
     const { email, password } = req.body;
     // check if user exist
     User.findOne({ email }).exec((err, user) => {

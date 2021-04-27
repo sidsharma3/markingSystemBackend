@@ -20,7 +20,7 @@ exports.create = (req, res) => {
             });
         }
 
-        const { title, body, categories, tags } = fields;
+        const { title, body, categories, tags, feedback } = fields;
 
         if (!title || !title.length) {
             return res.status(400).json({
@@ -47,6 +47,11 @@ exports.create = (req, res) => {
         }
 
         let blog = new Blog();
+
+        if (feedback) {
+            blog.feedback = feedback;
+        }
+
         blog.title = title;
         blog.body = body;
         blog.excerpt = smartTrim(body, 320, ' ', ' ...');
@@ -57,6 +62,8 @@ exports.create = (req, res) => {
         // categories and tags
         let arrayOfCategories = categories && categories.split(',');
         let arrayOfTags = tags && tags.split(',');
+
+        console.log(blog)
 
         if (files.photo) {
             if (files.photo.size > 10000000) {
@@ -171,7 +178,7 @@ exports.read = (req, res) => {
         .populate('categories', '_id name slug')
         .populate('tags', '_id name slug')
         .populate('postedBy', '_id name username')
-        .select('_id title body slug mtitle mdesc categories tags postedBy createdAt updatedAt')
+        .select('_id title body slug feedback mtitle mdesc categories tags postedBy createdAt updatedAt')
         .exec((err, data) => {
             if (err) {
                 return res.json({
@@ -220,11 +227,15 @@ exports.update = (req, res) => {
             oldBlog = _.merge(oldBlog, fields);
             oldBlog.slug = slugBeforeMerge;
 
-            const { body, desc, categories, tags } = fields;
+            const { body, desc, categories, tags, feedback } = fields;
 
             if (body) {
                 oldBlog.excerpt = smartTrim(body, 320, ' ', ' ...');
                 oldBlog.desc = stripHtml(body.substring(0, 160));
+            }
+
+            if (feedback) {
+                oldBlog.feedback = feedback;
             }
 
             if (categories) {

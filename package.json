@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
@@ -32,5 +31,14 @@
   },
   "devDependencies": {
     "webpack": "^5.27.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidsharma3/seoblogapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sidsharma3/seoblogapi/issues"
+  },
+  "homepage": "https://github.com/sidsharma3/seoblogapi#readme",
+  "description": ""
 }
